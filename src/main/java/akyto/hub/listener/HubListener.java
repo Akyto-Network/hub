@@ -4,32 +4,35 @@ import java.util.Arrays;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
+import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.weather.WeatherChangeEvent;
 import org.bukkit.inventory.Inventory;
 
-import akyto.hub.Hub;
 import akyto.hub.utils.Utils;
-import kezuk.npaper.kPaper;
-import kezuk.npaper.handler.MovementHandler;
-import net.minecraft.server.v1_7_R4.PacketPlayInFlying;
 
 public class HubListener implements Listener {
 	
-	private Hub main;
 	final Inventory inventory = Bukkit.createInventory(null, InventoryType.FURNACE, ChatColor.GRAY + "Select server:");
 	
-	public HubListener(final Hub main) {
-		this.main = main;
+	public HubListener() {
 		this.inventory.setItem(0, Utils.createItems(Material.DIAMOND_SWORD, ChatColor.WHITE + "Practice", Arrays.asList(
 				ChatColor.GRAY.toString() + ChatColor.STRIKETHROUGH + "---------------------",
 				ChatColor.YELLOW + "Train alone or with your friends",
@@ -48,24 +51,6 @@ public class HubListener implements Listener {
 				ChatColor.RED + "Click here to disconnect,",
 				ChatColor.RED + "See you soon :p",
 				ChatColor.GRAY.toString() + ChatColor.STRIKETHROUGH + "---------------------")));
-        kPaper.INSTANCE.addMovementHandler(new MovementHandler() {
-            public void handleUpdateLocation(final Player player, final Location location, final Location location1, final PacketPlayInFlying packetPlayInFlying) {
-    			player.teleport(location1);
-    			player.openInventory(inventory);
-            }
-            public void handleUpdateRotation(final Player player, final Location location, final Location location1, final PacketPlayInFlying packetPlayInFlying) {
-    			player.teleport(location1);
-    			player.openInventory(inventory);
-            }
-        });
-	}
-	
-	@EventHandler
-	public void onLogin(final PlayerLoginEvent event) {
-		if (!this.main.getBungeeIp().equals(event.getRealAddress().getHostAddress())) {
-        	event.disallow(PlayerLoginEvent.Result.KICK_OTHER, ChatColor.RED + "Please use the correct ip!");
-        	return;
-		}
 	}
 	
 	@EventHandler
@@ -76,8 +61,43 @@ public class HubListener implements Listener {
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onPlayerJoin(final PlayerJoinEvent event) {
 		event.setJoinMessage(null);
-		event.getPlayer().openInventory(this.inventory);
-		event.getPlayer().teleport(new Location(event.getPlayer().getWorld(), 0.00000d, 101.000d, 0.00000d, 0f, 0f));
+		event.getPlayer().sendMessage(new String[] {
+				ChatColor.GRAY + ChatColor.STRIKETHROUGH.toString() + "----------------------------------",
+				ChatColor.GRAY + "Welcome to Akyto " + ChatColor.RED + event.getPlayer().getName(),
+				ChatColor.DARK_GRAY + ChatColor.ITALIC.toString() + ChatColor.BOLD + "You can find our socials here" + ChatColor.GRAY + ":",
+				" ",
+				ChatColor.GRAY + ChatColor.ITALIC.toString() + "(*)" + ChatColor.DARK_GRAY + ChatColor.BOLD + " Discord" + ChatColor.GRAY + ": " + ChatColor.WHITE + "http://discord.akyto.club/",
+				ChatColor.GRAY + ChatColor.ITALIC.toString() + "(*)" + ChatColor.DARK_GRAY + ChatColor.BOLD + " Youtube" + ChatColor.GRAY + ": " + ChatColor.WHITE + "https://www.youtube.com/@AkytoNetwork",
+				ChatColor.GRAY + ChatColor.STRIKETHROUGH.toString() + "----------------------------------"
+				
+		});
+		event.getPlayer().getInventory().clear();
+		event.getPlayer().getInventory().setItem(4, Utils.createItems(Material.NETHER_STAR, ChatColor.GRAY + " » " + ChatColor.GOLD + "Select Server:", null));
+		event.getPlayer().updateInventory();
+		event.getPlayer().teleport(new Location(event.getPlayer().getWorld(), 0.315D, 101.00000D, 0.464D, 91.0f, -7.7f));
+	}
+	
+	@EventHandler
+	public void onPlayerInteract(final PlayerInteractEvent event) {
+		if (event.getPlayer().getGameMode().equals(GameMode.CREATIVE)) return;
+		if (event.getAction().equals(Action.RIGHT_CLICK_AIR) || event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+			if (event.getItem().getType().equals(Material.NETHER_STAR)) {
+				event.getPlayer().openInventory(inventory);
+			}
+		}
+	}
+	
+	@EventHandler
+	public void onDamage(final EntityDamageEvent event) {
+		event.setCancelled(true);
+		if (event.getCause().equals(DamageCause.VOID)) {
+			event.getEntity().teleport(new Location(event.getEntity().getWorld(), 0.315D, 101.00000D, 0.464D, 91.0f, -7.7f));
+		}
+	}
+	
+	@EventHandler
+	public void onTalk(final AsyncPlayerChatEvent event) {
+		event.setFormat("%1$s" + ": " + "%2$s");
 	}
 	
 	@EventHandler(priority = EventPriority.LOWEST)
@@ -100,5 +120,26 @@ public class HubListener implements Listener {
 			return;
 		}
 	}
-
+	
+	@EventHandler(priority=EventPriority.LOW)
+	public void PlayerPlaceBlockEvent(final BlockPlaceEvent event) {
+		if (event.getPlayer().getGameMode().equals(GameMode.CREATIVE)) return;
+		event.setCancelled(true);
+	}
+	
+	@EventHandler(priority=EventPriority.LOW)
+	public void PlayerBreakBlockEvent(final BlockBreakEvent event) {
+		if (event.getPlayer().getGameMode().equals(GameMode.CREATIVE)) return;
+		event.setCancelled(true);
+	}
+	
+	@EventHandler
+	public void onWeatherChange(final WeatherChangeEvent event) {
+		event.setCancelled(true);
+	}
+	
+	@EventHandler
+	public void onFoodChange(final FoodLevelChangeEvent event) {
+		event.setCancelled(true);
+	}
 }

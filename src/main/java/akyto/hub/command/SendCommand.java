@@ -23,6 +23,7 @@ public class SendCommand implements CommandExecutor {
 			sender.sendMessage(ChatColor.RED + args[0] + "isn't online!");
 			return false;
 		}
+		sender.sendMessage(ChatColor.RED + "You've been sended " + target.getName() + " to " + args[1]);
 		Utils.sendServer(target, "Connect", args[1]);
 		return false;
 	}

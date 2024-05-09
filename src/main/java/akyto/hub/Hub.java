@@ -16,7 +16,7 @@ public class Hub extends JavaPlugin{
 	public void onEnable() {
 		instance = this;
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
-		this.getServer().getPluginManager().registerEvents(new HubListener(this), this);
+		this.getServer().getPluginManager().registerEvents(new HubListener(), this);
 		this.getCommand("send").setExecutor(new SendCommand());
 	}
 }
