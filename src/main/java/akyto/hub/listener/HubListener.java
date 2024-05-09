@@ -20,6 +20,7 @@ import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -66,8 +67,8 @@ public class HubListener implements Listener {
 				ChatColor.GRAY + "Welcome to Akyto " + ChatColor.RED + event.getPlayer().getName(),
 				ChatColor.DARK_GRAY + ChatColor.ITALIC.toString() + ChatColor.BOLD + "You can find our socials here" + ChatColor.GRAY + ":",
 				" ",
-				ChatColor.GRAY + ChatColor.ITALIC.toString() + "(*)" + ChatColor.DARK_GRAY + ChatColor.BOLD + " Discord" + ChatColor.GRAY + ": " + ChatColor.WHITE + "http://discord.akyto.club/",
-				ChatColor.GRAY + ChatColor.ITALIC.toString() + "(*)" + ChatColor.DARK_GRAY + ChatColor.BOLD + " Youtube" + ChatColor.GRAY + ": " + ChatColor.WHITE + "https://www.youtube.com/@AkytoNetwork",
+				ChatColor.GRAY + ChatColor.ITALIC.toString() + "(*)" + ChatColor.DARK_GRAY + ChatColor.BOLD + " Discord" + ChatColor.GRAY + ": " + ChatColor.WHITE + "discord.akyto.club",
+				ChatColor.GRAY + ChatColor.ITALIC.toString() + "(*)" + ChatColor.DARK_GRAY + ChatColor.BOLD + " Youtube" + ChatColor.GRAY + ": " + ChatColor.WHITE + "www.youtube.com/@AkytoNetwork",
 				ChatColor.GRAY + ChatColor.STRIKETHROUGH.toString() + "----------------------------------"
 				
 		});
@@ -87,16 +88,27 @@ public class HubListener implements Listener {
 		}
 	}
 	
-	@EventHandler
+	@EventHandler(priority=EventPriority.NORMAL)
 	public void onDamage(final EntityDamageEvent event) {
-		event.setCancelled(true);
 		if (event.getCause().equals(DamageCause.VOID)) {
 			event.getEntity().teleport(new Location(event.getEntity().getWorld(), 0.315D, 101.00000D, 0.464D, 91.0f, -7.7f));
 		}
+		event.setDamage(0.0d);
+		event.setCancelled(true);
+	}
+	
+	@EventHandler(priority=EventPriority.NORMAL)
+	public void onDrop(final PlayerDropItemEvent event) {
+		event.setCancelled(true);
 	}
 	
 	@EventHandler
 	public void onTalk(final AsyncPlayerChatEvent event) {
+		if (!event.getPlayer().isOp() || !event.getPlayer().hasPermission("akyto.staff")) {
+			event.setCancelled(true);
+			event.getPlayer().sendMessage(ChatColor.RED + "The chat is disabled in the hub!");
+			return;
+		}
 		event.setFormat("%1$s" + ": " + "%2$s");
 	}
 	
