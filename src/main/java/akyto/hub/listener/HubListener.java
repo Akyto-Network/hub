@@ -72,6 +72,7 @@ public class HubListener implements Listener {
 				ChatColor.GRAY + ChatColor.STRIKETHROUGH.toString() + "----------------------------------"
 				
 		});
+		event.getPlayer().setFoodLevel(20);
 		event.getPlayer().getInventory().clear();
 		event.getPlayer().getInventory().setItem(4, Utils.createItems(Material.NETHER_STAR, ChatColor.GRAY + " » " + ChatColor.GOLD + "Select Server:", null));
 		event.getPlayer().updateInventory();
@@ -150,7 +151,7 @@ public class HubListener implements Listener {
 		event.setCancelled(true);
 	}
 	
-	@EventHandler
+	@EventHandler(priority=EventPriority.NORMAL)
 	public void onFoodChange(final FoodLevelChangeEvent event) {
 		event.setCancelled(true);
 	}
