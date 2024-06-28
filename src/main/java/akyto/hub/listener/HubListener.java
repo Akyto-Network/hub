@@ -2,6 +2,10 @@ package akyto.hub.listener;
 
 import java.util.Arrays;
 
+import akyto.core.Core;
+import akyto.core.utils.item.ItemUtils;
+import akyto.hub.Hub;
+import akyto.hub.server.ServerInfo;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -32,28 +36,30 @@ import akyto.hub.utils.Utils;
 public class HubListener implements Listener {
 	
 	final Inventory inventory = Bukkit.createInventory(null, InventoryType.FURNACE, ChatColor.GRAY + "Select server:");
-	
-	public HubListener() {
-		this.inventory.setItem(0, Utils.createItems(Material.DIAMOND_SWORD, ChatColor.WHITE + "Practice", Arrays.asList(
+
+	private void refreshInventory() {
+		this.inventory.setItem(0, ItemUtils.createItems(Material.DIAMOND_SWORD, ChatColor.WHITE + "Practice", Arrays.asList(
 				ChatColor.GRAY.toString() + ChatColor.STRIKETHROUGH + "---------------------",
 				ChatColor.YELLOW + "Train alone or with your friends",
 				" ",
+				ChatColor.GOLD + "Online" + ChatColor.GRAY + ": " + ChatColor.WHITE + Hub.getInstance().getServerCount(Bukkit.getOnlinePlayers().iterator().next(), "practice"),
 				ChatColor.GOLD + "Status" + ChatColor.GRAY + ": " + ChatColor.RED + "Whitelisted",
 				ChatColor.GRAY.toString() + ChatColor.STRIKETHROUGH + "---------------------")));
-		this.inventory.setItem(1, Utils.createItems(Material.SKULL_ITEM, ChatColor.WHITE + "JJK-Pot", Arrays.asList(
+		this.inventory.setItem(1, ItemUtils.createItems(Material.MUSHROOM_SOUP, ChatColor.WHITE + "Soup(World)", Arrays.asList(
 				ChatColor.GRAY.toString() + ChatColor.STRIKETHROUGH + "---------------------",
-				ChatColor.YELLOW + "Focused on the jujutsu kaisen theme,",
-				ChatColor.YELLOW + " a mixed potion and farming game",
+				ChatColor.YELLOW + "Discover skills and kits",
+				ChatColor.YELLOW + "and enter the arena to do battle!",
 				" ",
+				ChatColor.GOLD + "Online" + ChatColor.GRAY + ": " + ChatColor.WHITE + Hub.getInstance().getServerCount(Bukkit.getOnlinePlayers().iterator().next(), "soup"),
 				ChatColor.GOLD + "Status" + ChatColor.GRAY + ": " + ChatColor.RED + "Whitelisted",
 				ChatColor.GRAY.toString() + ChatColor.STRIKETHROUGH + "---------------------")));
-		this.inventory.setItem(2, Utils.createItems(Material.BOOK, ChatColor.DARK_RED + "Disconnect", Arrays.asList(
+		this.inventory.setItem(2, ItemUtils.createItems(Material.BOOK, ChatColor.DARK_RED + "Disconnect", Arrays.asList(
 				ChatColor.GRAY.toString() + ChatColor.STRIKETHROUGH + "---------------------",
 				ChatColor.RED + "Click here to disconnect,",
 				ChatColor.RED + "See you soon :p",
 				ChatColor.GRAY.toString() + ChatColor.STRIKETHROUGH + "---------------------")));
 	}
-	
+
 	@EventHandler
 	public void onLeft(final PlayerQuitEvent event) {
 		event.setQuitMessage(null);
@@ -62,21 +68,27 @@ public class HubListener implements Listener {
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onPlayerJoin(final PlayerJoinEvent event) {
 		event.setJoinMessage(null);
+		Core.API.getManagerHandler().getProfileManager().createProfile(event.getPlayer().getUniqueId());
+		Core.API.getDatabaseSetup().loadAsync(event.getPlayer().getUniqueId(), 0, null);
 		event.getPlayer().sendMessage(new String[] {
 				ChatColor.GRAY + ChatColor.STRIKETHROUGH.toString() + "----------------------------------",
-				ChatColor.GRAY + "Welcome to Akyto " + ChatColor.RED + event.getPlayer().getName(),
-				ChatColor.DARK_GRAY + ChatColor.ITALIC.toString() + ChatColor.BOLD + "You can find our socials here" + ChatColor.GRAY + ":",
+				ChatColor.YELLOW + ChatColor.ITALIC.toString() + ChatColor.BOLD + "You can find our socials here" + ChatColor.GRAY + ":",
 				" ",
+				ChatColor.DARK_GRAY + ChatColor.BOLD.toString() + "Akyto:",
 				ChatColor.GRAY + ChatColor.ITALIC.toString() + "(*)" + ChatColor.DARK_GRAY + ChatColor.BOLD + " Discord" + ChatColor.GRAY + ": " + ChatColor.WHITE + "discord.akyto.club",
 				ChatColor.GRAY + ChatColor.ITALIC.toString() + "(*)" + ChatColor.DARK_GRAY + ChatColor.BOLD + " Youtube" + ChatColor.GRAY + ": " + ChatColor.WHITE + "www.youtube.com/@AkytoNetwork",
+				ChatColor.GRAY + ChatColor.ITALIC.toString() + "(*)" + ChatColor.DARK_GRAY + ChatColor.BOLD + " Website" + ChatColor.GRAY + ": " + ChatColor.WHITE + "http://.akyto.club",
+				" ",
+				ChatColor.DARK_AQUA + ChatColor.BOLD.toString() + "SoupWorld:",
+				ChatColor.GRAY + ChatColor.ITALIC.toString() + "(*)" + ChatColor.AQUA + ChatColor.BOLD + " Discord" + ChatColor.GRAY + ": " + ChatColor.WHITE + "discord.soupworld.net",
 				ChatColor.GRAY + ChatColor.STRIKETHROUGH.toString() + "----------------------------------"
 				
 		});
 		event.getPlayer().setFoodLevel(20);
 		event.getPlayer().getInventory().clear();
-		event.getPlayer().getInventory().setItem(4, Utils.createItems(Material.NETHER_STAR, ChatColor.GRAY + " » " + ChatColor.GOLD + "Select Server:", null));
+		event.getPlayer().getInventory().setItem(4, ItemUtils.createItems(Material.NETHER_STAR, ChatColor.GRAY + "Select Server:"));
 		event.getPlayer().updateInventory();
-		event.getPlayer().teleport(new Location(event.getPlayer().getWorld(), 0.315D, 101.00000D, 0.464D, 91.0f, -7.7f));
+		event.getPlayer().teleport(new Location(event.getPlayer().getWorld(), 5502.464D, 102.06250D, 5393.673D, 0.3f, -0.1f));
 	}
 	
 	@EventHandler
@@ -84,6 +96,7 @@ public class HubListener implements Listener {
 		if (event.getPlayer().getGameMode().equals(GameMode.CREATIVE)) return;
 		if (event.getAction().equals(Action.RIGHT_CLICK_AIR) || event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
 			if (event.getItem().getType().equals(Material.NETHER_STAR)) {
+				this.refreshInventory();
 				event.getPlayer().openInventory(inventory);
 			}
 		}
@@ -92,7 +105,7 @@ public class HubListener implements Listener {
 	@EventHandler(priority=EventPriority.NORMAL)
 	public void onDamage(final EntityDamageEvent event) {
 		if (event.getCause().equals(DamageCause.VOID)) {
-			event.getEntity().teleport(new Location(event.getEntity().getWorld(), 0.315D, 101.00000D, 0.464D, 91.0f, -7.7f));
+			event.getEntity().teleport(new Location(event.getEntity().getWorld(), 5502.464D, 102.06250D, 5393.673D, 0.3f, -0.1f));
 		}
 		event.setDamage(0.0d);
 		event.setCancelled(true);
@@ -101,16 +114,6 @@ public class HubListener implements Listener {
 	@EventHandler(priority=EventPriority.NORMAL)
 	public void onDrop(final PlayerDropItemEvent event) {
 		event.setCancelled(true);
-	}
-	
-	@EventHandler
-	public void onTalk(final AsyncPlayerChatEvent event) {
-		if (!event.getPlayer().isOp() || !event.getPlayer().hasPermission("akyto.staff")) {
-			event.setCancelled(true);
-			event.getPlayer().sendMessage(ChatColor.RED + "The chat is disabled in the hub!");
-			return;
-		}
-		event.setFormat("%1$s" + ": " + "%2$s");
 	}
 	
 	@EventHandler(priority = EventPriority.LOWEST)
@@ -122,7 +125,11 @@ public class HubListener implements Listener {
 		}
 		event.setCancelled(true);
 		if (event.getCurrentItem().getType().equals(Material.DIAMOND_SWORD)) {
-			Utils.sendServer(Bukkit.getPlayer(event.getWhoClicked().getUniqueId()), "Connect", "practicena");
+			Utils.sendServer(Bukkit.getPlayer(event.getWhoClicked().getUniqueId()), "Connect", "practice");
+			return;
+		}
+		if (event.getCurrentItem().getType().equals(Material.MUSHROOM_SOUP)) {
+			Utils.sendServer(Bukkit.getPlayer(event.getWhoClicked().getUniqueId()), "Connect", "soup");
 			return;
 		}
 		if (event.getCurrentItem().getType().equals(Material.SKULL_ITEM)) {

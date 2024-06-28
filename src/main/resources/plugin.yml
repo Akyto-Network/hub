@@ -2,5 +2,7 @@ name: Hub
 author: [kezukdev]
 version: 1.0-dev
 main: akyto.hub.Hub
+depend: [Core]
 commands:
   send:
+    aliases: [summon]
