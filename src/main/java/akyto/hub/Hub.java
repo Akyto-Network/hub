@@ -23,6 +23,7 @@ import java.io.EOFException;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.HashMap;
+import java.util.UUID;
 import java.util.function.Consumer;
 import java.util.logging.Level;
 
@@ -33,6 +34,9 @@ public class Hub extends JavaPlugin implements PluginMessageListener {
 
 	@Getter
 	private HashMap<String, ServerInfo> serverInfoMap = new HashMap<>();
+
+	@Getter
+	final HashMap<UUID, Long> cooldown = new HashMap<>();
 
     public void onEnable() {
 		instance = this;
