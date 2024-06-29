@@ -6,3 +6,5 @@ depend: [Core]
 commands:
   send:
     aliases: [summon]
+  pets:
+    aliases: [family]

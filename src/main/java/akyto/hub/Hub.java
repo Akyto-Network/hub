@@ -2,30 +2,25 @@ package akyto.hub;
 
 import aether.Aether;
 import akyto.hub.board.SideBoard;
-import akyto.hub.server.ServerInfo;
-import com.google.common.base.Splitter;
-import com.google.common.collect.Iterables;
+import akyto.hub.command.PetsCommand;
+import akyto.hub.listener.InventoryListener;
+import akyto.hub.manager.InventoryManager;
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import akyto.hub.command.SendCommand;
-import akyto.hub.listener.HubListener;
+import akyto.hub.listener.PlayerListener;
 import lombok.Getter;
 import org.bukkit.plugin.messaging.PluginMessageListener;
-import org.bukkit.scheduler.BukkitTask;
 
-import java.io.DataInputStream;
-import java.io.EOFException;
-import java.io.IOException;
-import java.lang.reflect.Field;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.UUID;
-import java.util.function.Consumer;
-import java.util.logging.Level;
 
 public class Hub extends JavaPlugin implements PluginMessageListener {
 	
@@ -33,18 +28,31 @@ public class Hub extends JavaPlugin implements PluginMessageListener {
 	public static Hub instance;
 
 	@Getter
-	private HashMap<String, ServerInfo> serverInfoMap = new HashMap<>();
+	final HashMap<UUID, Long> cooldown = new HashMap<>();
+	@Getter
+	final HashMap<UUID, Entity> pets = new HashMap<>();
+	@Getter
+	final HashMap<UUID, Entity> jollyjumper = new HashMap<>();
 
 	@Getter
-	final HashMap<UUID, Long> cooldown = new HashMap<>();
+	final InventoryManager inventoryManager = new InventoryManager();
 
     public void onEnable() {
 		instance = this;
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
 		Bukkit.getMessenger().registerIncomingPluginChannel(this, "BungeeCord", this);
-		this.getServer().getPluginManager().registerEvents(new HubListener(), this);
+		this.getServer().getPluginManager().registerEvents(new PlayerListener(), this);
+		this.getServer().getPluginManager().registerEvents(new InventoryListener(), this);
 		this.getCommand("send").setExecutor(new SendCommand());
+		this.getCommand("pets").setExecutor(new PetsCommand());
 		new Aether(this, new SideBoard(this));
+	}
+
+	public void onDisable() {
+		for (Iterator<Entity> iterator = getServer().getWorld("world").getEntities().iterator(); iterator.hasNext(); ) {
+			Entity entity = iterator.next();
+			entity.remove();
+		}
 	}
 
 	private final HashMap<String, Integer> serverCount = new HashMap<>();
