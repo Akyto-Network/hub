@@ -5,7 +5,7 @@ import akyto.core.utils.CoreUtils;
 import akyto.core.utils.item.ItemUtils;
 import akyto.hub.Hub;
 import akyto.hub.task.RgbArmorTask;
-import net.minecraft.server.v1_8_R3.EntityHorse;
+import akyto.spigot.util.ItemBuilder;
 import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.Event;
@@ -66,10 +66,15 @@ public class PlayerListener implements Listener {
 		player.setFoodLevel(20);
 		player.getInventory().clear();
 		for (int i = 0; i < 9; i++) {
-			player.getInventory().setItem(i, new ItemStack(Material.STAINED_GLASS_PANE, 1, (short)0, (byte)15));
+			player.getInventory().setItem(i,
+					new ItemBuilder(Material.STAINED_GLASS_PANE)
+							.setDurability((short) 15)
+							.setName(" ")
+							.toItemStack()
+			);
 		}
 		player.getInventory().setItem(2, ItemUtils.createItems(Material.ENDER_PEARL, ChatColor.GRAY + "Ender-butt"));
-		player.getInventory().setItem(4, ItemUtils.createItems(Material.NETHER_STAR, ChatColor.YELLOW + "Select Server:"));
+		player.getInventory().setItem(4, ItemUtils.createItems(Material.NETHER_STAR, ChatColor.YELLOW + "Select Server"));
 		player.getInventory().setItem(6, ItemUtils.createItems(Material.SADDLE, ChatColor.GRAY + "Call Jolly Jumper"));
 		player.updateInventory();
 		player.setCustomName(CoreUtils.translate(Core.API.getManagerHandler().getProfileManager().getRank(player.getUniqueId()).getColor()) + player.getName());
@@ -94,7 +99,7 @@ public class PlayerListener implements Listener {
 				Hub.getInstance(),
 				rgbArmor,
 				1L,
-				0L
+				1L
 		);
 		rgbArmor.setTask(rgbArmorTask);
 	}

@@ -49,10 +49,9 @@ public class Hub extends JavaPlugin implements PluginMessageListener {
 	}
 
 	public void onDisable() {
-		for (Iterator<Entity> iterator = getServer().getWorld("world").getEntities().iterator(); iterator.hasNext(); ) {
-			Entity entity = iterator.next();
-			entity.remove();
-		}
+        for (Entity entity : getServer().getWorld("world").getEntities()) {
+            entity.remove();
+        }
 	}
 
 	private final HashMap<String, Integer> serverCount = new HashMap<>();

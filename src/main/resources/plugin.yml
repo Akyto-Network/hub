@@ -1,5 +1,5 @@
 name: Hub
-author: [kezukdev]
+authors: [kezukdev, Greentor]
 version: 1.0-dev
 main: akyto.hub.Hub
 depend: [Core]
