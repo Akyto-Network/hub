@@ -55,7 +55,7 @@ public class PlayerListener implements Listener {
 				ChatColor.DARK_GRAY + ChatColor.BOLD.toString() + "Akyto:",
 				ChatColor.GRAY + ChatColor.ITALIC.toString() + "(*)" + ChatColor.DARK_GRAY + ChatColor.BOLD + " Discord" + ChatColor.GRAY + ": " + ChatColor.WHITE + "discord.akyto.club",
 				ChatColor.GRAY + ChatColor.ITALIC.toString() + "(*)" + ChatColor.DARK_GRAY + ChatColor.BOLD + " Youtube" + ChatColor.GRAY + ": " + ChatColor.WHITE + "www.youtube.com/@AkytoNetwork",
-				ChatColor.GRAY + ChatColor.ITALIC.toString() + "(*)" + ChatColor.DARK_GRAY + ChatColor.BOLD + " Website" + ChatColor.GRAY + ": " + ChatColor.WHITE + "http://.akyto.club",
+				ChatColor.GRAY + ChatColor.ITALIC.toString() + "(*)" + ChatColor.DARK_GRAY + ChatColor.BOLD + " Website" + ChatColor.GRAY + ": " + ChatColor.WHITE + "http://akyto.club",
 				" ",
 				ChatColor.DARK_AQUA + ChatColor.BOLD.toString() + "SoupWorld:",
 				ChatColor.GRAY + ChatColor.ITALIC.toString() + "(*)" + ChatColor.AQUA + ChatColor.BOLD + " Discord" + ChatColor.GRAY + ": " + ChatColor.WHITE + "discord.soupworld.net",
