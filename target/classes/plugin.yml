@@ -1,6 +1,0 @@
-name: Hub
-author: [kezukdev]
-version: 1.0-dev
-main: akyto.hub.Hub
-commands:
-  send:
