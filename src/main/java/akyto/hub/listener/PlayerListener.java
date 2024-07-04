@@ -98,8 +98,8 @@ public class PlayerListener implements Listener {
 		BukkitTask rgbArmorTask = Hub.getInstance().getServer().getScheduler().runTaskTimerAsynchronously(
 				Hub.getInstance(),
 				rgbArmor,
-				1L,
-				1L
+				5L,
+				2L
 		);
 		rgbArmor.setTask(rgbArmorTask);
 	}
