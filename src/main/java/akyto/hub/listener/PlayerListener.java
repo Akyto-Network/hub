@@ -5,7 +5,6 @@ import akyto.core.utils.CoreUtils;
 import akyto.core.utils.item.ItemUtils;
 import akyto.hub.Hub;
 import akyto.hub.task.RgbArmorTask;
-import akyto.spigot.util.ItemBuilder;
 import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.Event;
@@ -65,22 +64,14 @@ public class PlayerListener implements Listener {
 		});
 		player.setFoodLevel(20);
 		player.getInventory().clear();
-		for (int i = 0; i < 9; i++) {
-			player.getInventory().setItem(i,
-					new ItemBuilder(Material.STAINED_GLASS_PANE)
-							.setDurability((short) 15)
-							.setName(" ")
-							.toItemStack()
-			);
-		}
 		player.getInventory().setItem(2, ItemUtils.createItems(Material.ENDER_PEARL, ChatColor.GRAY + "Ender-butt"));
 		player.getInventory().setItem(4, ItemUtils.createItems(Material.NETHER_STAR, ChatColor.YELLOW + "Select Server"));
 		player.getInventory().setItem(6, ItemUtils.createItems(Material.SADDLE, ChatColor.GRAY + "Call Jolly Jumper"));
 		player.updateInventory();
 		player.setCustomName(CoreUtils.translate(Core.API.getManagerHandler().getProfileManager().getRank(player.getUniqueId()).getColor()) + player.getName());
 		player.setCustomNameVisible(true);
-		player.teleport(new Location(event.getPlayer().getWorld(), 5502.464D, 102.06250D, 5393.673D, 0.3f, -0.1f));
-		Bukkit.getScheduler().runTaskLater(Hub.getInstance(), () -> {
+		player.teleport(Hub.getInstance().getServer().getWorlds().getFirst().getSpawnLocation());
+		Hub.getInstance().getServer().getScheduler().runTaskLater(Hub.getInstance(), () -> {
 			if (player.isOnline()) {
 				Location loc = player.getLocation();
 				Wolf dog = (Wolf) loc.getWorld().spawnEntity(loc, EntityType.WOLF);
@@ -125,7 +116,7 @@ public class PlayerListener implements Listener {
 					Item item = player.getWorld().dropItem(player.getLocation().add(0.0D, 0.5D, 0.0D), new ItemStack(Material.ENDER_PEARL, 16));
 					item.setPickupDelay(10000);
 					item.setVelocity(player.getLocation().getDirection().normalize().multiply(1.5F));
-					item.setPassenger((Entity)player);
+					item.setPassenger(player);
 					player.getWorld().playSound(player.getLocation(), Sound.ENDERMAN_TELEPORT, 1.0F, 1.0F);
 					Utils.setupEnderpearlRunnable(item);
 					player.updateInventory();
