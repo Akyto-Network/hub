@@ -1,7 +1,5 @@
 package akyto.hub.task;
 
-import akyto.core.profile.Profile;
-import akyto.core.profile.ProfileState;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Color;
@@ -64,7 +62,6 @@ public class RgbArmorTask implements Runnable {
 
     @Override
     public void run() {
-
         if (this.entity.isDead()) {
             this.stopTask();
             return;
@@ -85,6 +82,8 @@ public class RgbArmorTask implements Runnable {
             this.stopTask();
             return;
         }
+
+        this.entity.getEquipment().setArmorContents(this.entity.getEquipment().getArmorContents());
 
         if (++i == rgb.length) i = 0;
     }
