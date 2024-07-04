@@ -122,11 +122,11 @@ public class PlayerListener implements Listener {
 					player.updateInventory();
 				}
 			}
-			if (event.getItem().getType().equals(Material.NETHER_STAR)) {
+			if (itemStack.getType().equals(Material.NETHER_STAR)) {
 				Hub.getInstance().getInventoryManager().refreshInventory();
 				event.getPlayer().openInventory(Hub.getInstance().getInventoryManager().getSelector());
 			}
-			if (event.getItem().getType().equals(Material.SADDLE)) {
+			if (itemStack.getType().equals(Material.SADDLE)) {
 				if (event.getPlayer().getVehicle() != null) {
 					event.setCancelled(true);
 					return;
