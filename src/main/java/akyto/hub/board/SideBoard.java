@@ -2,9 +2,9 @@ package akyto.hub.board;
 
 import java.util.*;
 
-import aether.scoreboard.Board;
-import aether.scoreboard.BoardAdapter;
-import aether.scoreboard.cooldown.BoardCooldown;
+import com.bizarrealex.aether.scoreboard.Board;
+import com.bizarrealex.aether.scoreboard.BoardAdapter;
+import com.bizarrealex.aether.scoreboard.cooldown.BoardCooldown;
 import akyto.core.rank.RankEntry;
 import akyto.hub.Hub;
 import org.bukkit.Bukkit;

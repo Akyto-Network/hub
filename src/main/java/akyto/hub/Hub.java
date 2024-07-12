@@ -1,6 +1,6 @@
 package akyto.hub;
 
-import aether.Aether;
+import com.bizarrealex.aether.Aether;
 import akyto.hub.board.SideBoard;
 import akyto.hub.command.PetsCommand;
 import akyto.hub.listener.InventoryListener;
@@ -19,7 +19,6 @@ import lombok.Getter;
 import org.bukkit.plugin.messaging.PluginMessageListener;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.UUID;
 
 public class Hub extends JavaPlugin implements PluginMessageListener {

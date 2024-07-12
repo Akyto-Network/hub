@@ -25,6 +25,14 @@
 			<version>1.18.32</version>
 			<scope>provided</scope>
 		</dependency>
+
+        <dependency>
+            <groupId>com.bizzarealex</groupId>
+            <artifactId>aether</artifactId>
+            <version>1.0</version>
+            <scope>compile</scope>
+        </dependency>
+
         <dependency>
             <groupId>akyto.paperspigot</groupId>
             <artifactId>aspigot-server</artifactId>
