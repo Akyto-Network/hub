@@ -1,0 +1,10 @@
+title: "&2SERVER"
+line:
+  - "&7&m-----------------------"
+  - "&2Global&7: &f%globalOnline%"
+  - " "
+  - "&aPractice&7: &f%practiceOnline%"
+  - "&aKit-Map&7: &f%kitMapOnline%"
+  - "&aHCF&7: &f%hcfOnline%"
+  - "&7&m-----------------------"
+  - "&2server.com"

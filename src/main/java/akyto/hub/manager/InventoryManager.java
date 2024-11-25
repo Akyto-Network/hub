@@ -11,9 +11,9 @@ import org.bukkit.inventory.Inventory;
 
 import java.util.Arrays;
 
+@Getter
 public class InventoryManager {
 
-    @Getter
     final Inventory selector = Bukkit.createInventory(null, InventoryType.FURNACE, ChatColor.GRAY + "Select server:");
 
     public void refreshInventory() {

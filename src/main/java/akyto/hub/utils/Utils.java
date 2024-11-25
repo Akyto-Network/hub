@@ -24,10 +24,6 @@ public class Utils {
 	    player.sendPluginMessage(Hub.getInstance(), "BungeeCord", out.toByteArray());
 	}
 
-	public static boolean hasCooldown(final UUID uuid) {
-		return Hub.getInstance().getCooldown().get(uuid) > System.currentTimeMillis();
-	}
-
 	public static long getCooldown(final UUID uuid) {
 		return Math.max(0L, Hub.getInstance().getCooldown().get(uuid) - System.currentTimeMillis());
 	}
