@@ -2,7 +2,7 @@ name: Hub
 authors: [kezukdev, Greentor]
 version: 1.0-dev
 main: akyto.hub.Hub
-depend: [Core]
+depend: [Universal]
 commands:
   send:
     aliases: [summon]

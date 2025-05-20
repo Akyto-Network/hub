@@ -24,13 +24,13 @@ public class InventoryManager {
                 ChatColor.GOLD + "Online" + ChatColor.GRAY + ": " + ChatColor.WHITE + Hub.getInstance().getServerCount(Bukkit.getOnlinePlayers().iterator().next(), "practice"),
                 ChatColor.GOLD + "Status" + ChatColor.GRAY + ": " + ChatColor.RED + "Whitelisted",
                 ChatColor.GRAY.toString() + ChatColor.STRIKETHROUGH + "---------------------")));
-        this.selector.setItem(1, ItemUtils.createItems(Material.MUSHROOM_SOUP, ChatColor.WHITE + "Soup(World)", Arrays.asList(
+        this.selector.setItem(1, ItemUtils.createItems(Material.GOLD_CHESTPLATE, ChatColor.WHITE + "HCF", Arrays.asList(
                 ChatColor.GRAY.toString() + ChatColor.STRIKETHROUGH + "---------------------",
-                ChatColor.YELLOW + "Discover skills and kits",
-                ChatColor.YELLOW + "and enter the arena to do battle!",
+                ChatColor.YELLOW + "Create your factions",
+                ChatColor.YELLOW + "and play with them in harcored mode!",
                 " ",
                 ChatColor.GOLD + "Online" + ChatColor.GRAY + ": " + ChatColor.WHITE + Hub.getInstance().getServerCount(Bukkit.getOnlinePlayers().iterator().next(), "soup"),
-                ChatColor.GOLD + "Status" + ChatColor.GRAY + ": " + ChatColor.RED + "Whitelisted",
+                ChatColor.GOLD + "Status" + ChatColor.GRAY + ": " + ChatColor.RED + "Under Development",
                 ChatColor.GRAY.toString() + ChatColor.STRIKETHROUGH + "---------------------")));
         this.selector.setItem(2, ItemUtils.createItems(Material.BOOK, ChatColor.DARK_RED + "Disconnect", Arrays.asList(
                 ChatColor.GRAY.toString() + ChatColor.STRIKETHROUGH + "---------------------",

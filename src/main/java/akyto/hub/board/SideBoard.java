@@ -53,7 +53,7 @@ public class SideBoard implements BoardAdapter {
         board.add(ChatColor.GRAY + "Global" + ChatColor.GRAY + ": " + ChatColor.WHITE + globalOnline);
         board.add(" ");
         board.add(ChatColor.RED + "Practice" + ChatColor.GRAY + ": " + ChatColor.WHITE + Hub.getInstance().getServerCount(player, "practice"));
-        board.add(ChatColor.AQUA + "Soup" + ChatColor.GRAY + ": " + ChatColor.WHITE + Hub.getInstance().getServerCount(player, "soup"));
+        board.add(ChatColor.AQUA + "HCF" + ChatColor.GRAY + ": " + ChatColor.WHITE + Hub.getInstance().getServerCount(player, "hcf"));
         board.add(" ");
         final String rankString = Core.API.getManagerHandler().getProfileManager().getProfiles().get(player.getUniqueId()).getRank();
         final RankEntry rank = Core.API.getManagerHandler().getRankManager().getRanks().get(rankString);
