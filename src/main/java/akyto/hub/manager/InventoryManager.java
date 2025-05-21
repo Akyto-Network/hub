@@ -17,25 +17,20 @@ public class InventoryManager {
     final Inventory selector = Bukkit.createInventory(null, InventoryType.FURNACE, ChatColor.GRAY + "Select server:");
 
     public void refreshInventory() {
-        this.selector.setItem(0, ItemUtils.createItems(Material.DIAMOND_SWORD, ChatColor.WHITE + "Practice", Arrays.asList(
-                ChatColor.GRAY.toString() + ChatColor.STRIKETHROUGH + "---------------------",
-                ChatColor.YELLOW + "Train alone or with your friends",
+        this.selector.setItem(0, ItemUtils.createItems(Material.DIAMOND_SWORD, ChatColor.DARK_RED.toString() + ChatColor.BOLD + "Practice", Arrays.asList(
+                ChatColor.GRAY.toString() + ChatColor.ITALIC + "Parties, Events, ClubFight,",
+                ChatColor.GRAY.toString() + ChatColor.ITALIC + "Tournaments, 1v1...",
                 " ",
-                ChatColor.GOLD + "Online" + ChatColor.GRAY + ": " + ChatColor.WHITE + Hub.getInstance().getServerCount(Bukkit.getOnlinePlayers().iterator().next(), "practice"),
-                ChatColor.GOLD + "Status" + ChatColor.GRAY + ": " + ChatColor.RED + "Whitelisted",
-                ChatColor.GRAY.toString() + ChatColor.STRIKETHROUGH + "---------------------")));
-        this.selector.setItem(1, ItemUtils.createItems(Material.GOLD_CHESTPLATE, ChatColor.WHITE + "HCF", Arrays.asList(
-                ChatColor.GRAY.toString() + ChatColor.STRIKETHROUGH + "---------------------",
-                ChatColor.YELLOW + "Create your factions",
-                ChatColor.YELLOW + "and play with them in harcored mode!",
+                ChatColor.RED + "Online" + ChatColor.GRAY + ": " + ChatColor.WHITE + Hub.getInstance().getServerCount(Bukkit.getOnlinePlayers().iterator().next(), "practice"))));
+        this.selector.setItem(1, ItemUtils.createItems(Material.GOLD_CHESTPLATE, ChatColor.DARK_RED.toString() + ChatColor.BOLD + "HCF", Arrays.asList(
+                ChatColor.GRAY.toString() + ChatColor.ITALIC + "Hardcore factions, don't die.",
+                ChatColor.GRAY.toString() + ChatColor.ITALIC + "Currently under development.",
                 " ",
-                ChatColor.GOLD + "Online" + ChatColor.GRAY + ": " + ChatColor.WHITE + Hub.getInstance().getServerCount(Bukkit.getOnlinePlayers().iterator().next(), "soup"),
-                ChatColor.GOLD + "Status" + ChatColor.GRAY + ": " + ChatColor.RED + "Under Development",
-                ChatColor.GRAY.toString() + ChatColor.STRIKETHROUGH + "---------------------")));
+                ChatColor.RED + "Online" + ChatColor.GRAY + ": " + ChatColor.WHITE + Hub.getInstance().getServerCount(Bukkit.getOnlinePlayers().iterator().next(), "hcf"))));
         this.selector.setItem(2, ItemUtils.createItems(Material.BOOK, ChatColor.DARK_RED + "Disconnect", Arrays.asList(
-                ChatColor.GRAY.toString() + ChatColor.STRIKETHROUGH + "---------------------",
+                " ",
                 ChatColor.RED + "Click here to disconnect,",
                 ChatColor.RED + "See you soon :p",
-                ChatColor.GRAY.toString() + ChatColor.STRIKETHROUGH + "---------------------")));
+                " ")));
     }
 }
