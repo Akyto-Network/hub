@@ -38,7 +38,7 @@ public class SideBoard implements BoardAdapter {
         }
 
         // If player enabled scoreboard
-        if (pm.getSettings()[0] == 0) {
+        if (pm.getSettings()[0] != 2) {
             if (pm.isInState(ProfileState.FREE, ProfileState.MOD)) {
                 return this.getLobbyBoard(player);
             }
@@ -55,9 +55,9 @@ public class SideBoard implements BoardAdapter {
         final int globalOnline = Bukkit.getOnlinePlayers().size() + Hub.getInstance().getServerCount(player, "practice");
         board.add(ChatColor.GRAY + "Global" + ChatColor.GRAY + ": " + ChatColor.WHITE + globalOnline);
         board.add(spacer);
-        board.add(ChatColor.DARK_GRAY.toString() + ChatColor.BOLD + "Servers:");
-        board.add(ChatColor.GRAY + "• " + ChatColor.RED + "Practice" + ChatColor.GRAY + ": " + ChatColor.WHITE + Hub.getInstance().getServerCount(player, "practice"));
-        board.add(ChatColor.GRAY + "• " + ChatColor.RED + "HCF" + ChatColor.GRAY + ": " + ChatColor.WHITE + Hub.getInstance().getServerCount(player, "hcf"));
+        board.add(ChatColor.DARK_RED.toString() + ChatColor.BOLD + "Servers");
+        board.add(ChatColor.GRAY + "• " + ChatColor.WHITE + "Practice: " + ChatColor.RED + Hub.getInstance().getServerCount(player, "practice"));
+        board.add(ChatColor.GRAY + "• " + ChatColor.WHITE + "HCF: " + ChatColor.RED + Hub.getInstance().getServerCount(player, "hcf"));
         board.add(spacer);
         final String rankString = Core.API.getManagerHandler().getProfileManager().getProfiles().get(player.getUniqueId()).getRank();
         final RankEntry rank = Core.API.getManagerHandler().getRankManager().getRanks().get(rankString);

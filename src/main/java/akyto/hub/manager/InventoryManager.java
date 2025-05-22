@@ -21,12 +21,13 @@ public class InventoryManager {
                 ChatColor.GRAY.toString() + ChatColor.ITALIC + "Parties, Events, ClubFight,",
                 ChatColor.GRAY.toString() + ChatColor.ITALIC + "Tournaments, 1v1...",
                 " ",
-                ChatColor.RED + "Online" + ChatColor.GRAY + ": " + ChatColor.WHITE + Hub.getInstance().getServerCount(Bukkit.getOnlinePlayers().iterator().next(), "practice"))));
+                ChatColor.WHITE + " Online: " + ChatColor.RED + Hub.getInstance().getServerCount(Bukkit.getOnlinePlayers().iterator().next(), "practice"))));
         this.selector.setItem(1, ItemUtils.createItems(Material.GOLD_CHESTPLATE, ChatColor.DARK_RED.toString() + ChatColor.BOLD + "HCF", Arrays.asList(
                 ChatColor.GRAY.toString() + ChatColor.ITALIC + "Hardcore factions, don't die.",
                 ChatColor.GRAY.toString() + ChatColor.ITALIC + "Currently under development.",
                 " ",
-                ChatColor.RED + "Online" + ChatColor.GRAY + ": " + ChatColor.WHITE + Hub.getInstance().getServerCount(Bukkit.getOnlinePlayers().iterator().next(), "hcf"))));
+                ChatColor.WHITE + " Online: " + ChatColor.RED + Hub.getInstance().getServerCount(Bukkit.getOnlinePlayers().iterator().next(), "hcf"),
+                " ")));
         this.selector.setItem(2, ItemUtils.createItems(Material.BOOK, ChatColor.DARK_RED + "Disconnect", Arrays.asList(
                 " ",
                 ChatColor.RED + "Click here to disconnect,",

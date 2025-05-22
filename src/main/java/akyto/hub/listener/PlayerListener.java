@@ -49,21 +49,18 @@ public class PlayerListener implements Listener {
 		Core.API.getDatabaseSetup().loadAsync(player.getUniqueId(), 0, null);
 		Utils.applyCooldown(player.getUniqueId());
 		player.sendMessage(new String[] {
-				ChatColor.GRAY + ChatColor.STRIKETHROUGH.toString() + "----------------------------------",
-				ChatColor.YELLOW + ChatColor.ITALIC.toString() + ChatColor.BOLD + "You can find our socials here" + ChatColor.GRAY + ":",
 				" ",
-				ChatColor.DARK_GRAY + ChatColor.BOLD.toString() + "Akyto:",
-				ChatColor.GRAY + ChatColor.ITALIC.toString() + "(*)" + ChatColor.DARK_GRAY + ChatColor.BOLD + " Discord" + ChatColor.GRAY + ": " + ChatColor.WHITE + "discord.gg/akyto",
-				ChatColor.GRAY + ChatColor.ITALIC.toString() + "(*)" + ChatColor.DARK_GRAY + ChatColor.BOLD + " Youtube" + ChatColor.GRAY + ": " + ChatColor.WHITE + "www.youtube.com/@AkytoNetwork",
-				ChatColor.GRAY + ChatColor.ITALIC.toString() + "(*)" + ChatColor.DARK_GRAY + ChatColor.BOLD + " Website" + ChatColor.GRAY + ": " + ChatColor.WHITE + "http://akyto.net",
-				" ",
-				ChatColor.GRAY + ChatColor.STRIKETHROUGH.toString() + "----------------------------------"
+				ChatColor.DARK_RED + ChatColor.BOLD.toString() + "Socials",
+				ChatColor.GRAY + ChatColor.ITALIC.toString() + "(*)" + ChatColor.WHITE + ChatColor.BOLD + " Discord" + ChatColor.GRAY + ": " + ChatColor.RED + "discord.gg/akyto",
+				ChatColor.GRAY + ChatColor.ITALIC.toString() + "(*)" + ChatColor.WHITE + ChatColor.BOLD + " Youtube" + ChatColor.GRAY + ": " + ChatColor.RED + "www.youtube.com/@AkytoNetwork",
+				ChatColor.GRAY + ChatColor.ITALIC.toString() + "(*)" + ChatColor.WHITE + ChatColor.BOLD + " Website" + ChatColor.GRAY + ": " + ChatColor.RED + "http://akyto.net",
+				" "
 				
 		});
 		player.setFoodLevel(20);
 		player.getInventory().clear();
 		player.getInventory().setItem(2, ItemUtils.createItems(Material.ENDER_PEARL, ChatColor.GRAY + "Ender-butt"));
-		player.getInventory().setItem(4, ItemUtils.createItems(Material.NETHER_STAR, ChatColor.YELLOW + "Select Server"));
+		player.getInventory().setItem(4, ItemUtils.createItems(Material.NETHER_STAR, ChatColor.RED + "Select Server"));
 		player.getInventory().setItem(6, ItemUtils.createItems(Material.SADDLE, ChatColor.GRAY + "Call Jolly Jumper"));
 		player.updateInventory();
 		player.setCustomName(CoreUtils.translate(Core.API.getManagerHandler().getProfileManager().getRank(player.getUniqueId()).getColor()) + player.getName());
